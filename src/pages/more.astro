@@ -1,0 +1,34 @@
+---
+// more.astro (§4.3) — same structure as projects, non-academic work.
+// Only the default accent differs (handled per-entry in frontmatter).
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import Card from "../components/Card.astro";
+
+const entries = (await getCollection("more")).sort(
+  (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)
+);
+---
+<BaseLayout title="More — AphrixZjr">
+  <!-- §10.2: clashing-color blotch texture margins behind the reading column -->
+  <div class="texture-margins">
+    <div class="page wrap-col">
+      <SectionHeader index="02" label="More" title="More" />
+      <div class="card-list">
+        {entries.map((entry, i) => (
+          <Card entry={entry} index={i} kind="more" />
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page { padding-block: var(--sp-8) var(--sp-9); }
+  .card-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-7);
+  }
+</style>

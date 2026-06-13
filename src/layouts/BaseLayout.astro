@@ -1,0 +1,38 @@
+---
+// BaseLayout.astro (§7) — global shell: tokens/base/breaks once + self-hosted
+// fonts (Fontsource, build-time bundled, no runtime requests) + persistent Nav.
+import "../styles/tokens.css";
+import "../styles/base.css";
+import "../styles/breaks.css";
+
+// Self-hosted fonts. Only the weights the type system uses (§1.2):
+// display 700/800/900 · body 400/600 · mono 400/500. No ultra-thin weights.
+import "@fontsource/unbounded/700.css";
+import "@fontsource/unbounded/800.css";
+import "@fontsource/unbounded/900.css";
+import "@fontsource/schibsted-grotesk/400.css";
+import "@fontsource/schibsted-grotesk/600.css";
+import "@fontsource/martian-mono/400.css";
+import "@fontsource/martian-mono/500.css";
+
+import Nav from "../components/Nav.astro";
+
+interface Props { title: string; description?: string; }
+const { title, description = "Personal portfolio and content archive." } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <Nav />
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

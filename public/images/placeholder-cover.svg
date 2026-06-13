@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="270" viewBox="0 0 480 270" role="img" aria-label="Placeholder cover">
+  <!-- 16:9 brutalist placeholder cover. Square corners, hard edges, acid mark. -->
+  <rect width="480" height="270" fill="#eae2d0"/>
+  <!-- diagonal hairlines (archive marker), true black -->
+  <line x1="0" y1="0" x2="480" y2="270" stroke="#0e0e0e" stroke-width="1.5" opacity="0.35"/>
+  <line x1="480" y1="0" x2="0" y2="270" stroke="#0e0e0e" stroke-width="1.5" opacity="0.35"/>
+  <!-- acid highlight bar -->
+  <rect x="28" y="28" width="120" height="16" fill="#ccff00" stroke="#0e0e0e" stroke-width="2"/>
+  <!-- mono-style label -->
+  <text x="28" y="150" font-family="'Martian Mono', ui-monospace, monospace" font-size="22" font-weight="600" letter-spacing="2" fill="#0e0e0e">IMAGE</text>
+  <text x="28" y="176" font-family="'Martian Mono', ui-monospace, monospace" font-size="13" letter-spacing="2" fill="#4a4a45">480 × 270 · 16:9</text>
+  <!-- outer ink frame -->
+  <rect x="1.25" y="1.25" width="477.5" height="267.5" fill="none" stroke="#0e0e0e" stroke-width="2.5"/>
+</svg>

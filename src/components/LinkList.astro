@@ -1,0 +1,53 @@
+---
+// LinkList.astro (§3.6) — homepage bottom SECONDARY element: related external
+// links (GitHub / email / social). Equal-height mono chips, sorted by `order`,
+// auto flex-wrap — no hand placement. External links carry ↗ + SR label.
+import Markers from "./Markers.astro";
+
+interface LinkItem { label: string; href: string; order?: number; }
+interface Props { links: LinkItem[]; }
+const { links } = Astro.props;
+const sorted = [...links].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+const isExternal = (h: string) => h.startsWith("http") || h.startsWith("mailto:");
+---
+<ul class="linklist">
+  {sorted.map((l) => {
+    const ext = isExternal(l.href);
+    return (
+      <li>
+        <a
+          class="chip"
+          href={l.href}
+          target={ext ? "_blank" : undefined}
+          rel={ext ? "noopener noreferrer" : undefined}
+        >
+          {l.label}
+          {ext && <Markers type="arrow" size={14} />}
+          {ext && <span class="sr-only">(opens in new tab)</span>}
+        </a>
+      </li>
+    );
+  })}
+</ul>
+
+<style>
+  .linklist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-1);
+    font: 500 var(--fs-meta)/1 var(--font-mono);
+    letter-spacing: var(--tracking-meta);
+    text-transform: uppercase;
+    color: var(--c-ink);
+    padding: var(--sp-2) var(--sp-3);
+    border: var(--bd-thin);
+    border-radius: var(--radius);
+    transition: background-color 0.12s steps(2);
+  }
+  .chip:hover { background: var(--c-acid); }
+</style>

@@ -1,0 +1,23 @@
+---
+// Tag.astro (§3.2) — mono text, square hard border, thin fill.
+// Default transparent ground + ink border; hover inverts to acid fill.
+interface Props { label: string; }
+const { label } = Astro.props;
+---
+<li class="tag">{label}</li>
+
+<style>
+  .tag {
+    display: inline-block;
+    font: 500 var(--fs-meta)/1 var(--font-mono);
+    letter-spacing: var(--tracking-meta);
+    padding: var(--sp-1) var(--sp-2);
+    border: var(--bd-thin);
+    border-radius: var(--radius);
+    text-transform: uppercase;
+    color: var(--c-ink);
+    background: transparent;
+    transition: background-color 0.12s steps(2);
+  }
+  .tag:hover { background: var(--c-acid); }
+</style>

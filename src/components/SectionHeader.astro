@@ -1,0 +1,25 @@
+---
+// SectionHeader.astro (§3.3) — editorial: numbered mono plate + extra-bold
+// display title + acid highlight bar. Deterministic left shift via breaks.css.
+interface Props { index: string; label: string; title: string; }
+const { index, label, title } = Astro.props;
+---
+<header class="section-header">
+  <p class="section-header__plate">[ {index} / {label.toUpperCase()} ]</p>
+  <h1 class="section-header__title mark-bar">{title}</h1>
+</header>
+
+<style>
+  .section-header { margin-bottom: var(--sp-7); }
+  .section-header__plate {
+    font: 500 var(--fs-meta)/1 var(--font-mono);
+    letter-spacing: var(--tracking-meta);
+    text-transform: uppercase;
+    color: var(--c-ink-muted);
+    margin-bottom: var(--sp-3);
+  }
+  .section-header__title {
+    font: 800 var(--fs-h1)/var(--lh-head) var(--font-display);
+    color: var(--c-ink);
+  }
+</style>

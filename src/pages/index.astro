@@ -1,0 +1,206 @@
+---
+// index.astro — homepage (§4.3): hand-tuned asymmetric single page.
+// 3 EntryCards (Project/More routes, CV download) + LinkList of external links.
+// Text content (name / tagline / aboutme / links) comes from content/home.yaml.
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import EntryCard from "../components/EntryCard.astro";
+import LinkList from "../components/LinkList.astro";
+
+// Homepage text content — the `home` singleton collection (content/home.yaml).
+const [home] = await getCollection("home");
+const { name, tagline, aboutme, links } = home.data;
+
+// Homepage hero portrait — swap with a one-line change. The offline
+// acid-processed transparent PNGs (scripts/process_portraits.py, §10.1).
+const heroPortrait = "/images/portrait2-acid.png"; // or "/images/portrait1-acid.png"
+---
+<BaseLayout title={`${name} — Portfolio & Archive`}>
+  <div class="home wrap-page">
+
+    <!-- ── HERO: split-color band (§10.1). Blue-violet 2/3 text column +
+         acid 1/3 portrait column. The page's sole acid climax. ── -->
+    <section class="hero">
+      <div class="hero__text">
+        <p class="hero__plate" style="--i:0">[ PERSONAL SITE · 2026 ]</p>
+        <h1 class="hero__name" style="--i:1">{name}</h1>
+        <p class="hero__tagline" style="--i:2">{tagline}</p>
+
+        <div class="hero__about mark-bar" style="--i:3">
+          {aboutme.map((para: string) => <p>{para}</p>)}
+        </div>
+      </div>
+
+      <div class="hero__media" style="--i:2">
+        <img
+          class="hero__portrait"
+          src={heroPortrait}
+          alt="Portrait of Aphrix Zjr"
+          width="814"
+          height="1140"
+        />
+      </div>
+    </section>
+
+    <!-- ── ENTRY CARDS: the bottom MAIN visual (§3.5) ── -->
+    <section class="entries" aria-label="Site entries">
+      <div class="entries__grid">
+        <div style="--i:4"><EntryCard label="Project" sub="Academic projects" href="/projects" accent="anchor" /></div>
+        <div style="--i:5"><EntryCard label="More" sub="Other work" href="/more" accent="orange" /></div>
+        <div style="--i:6"><EntryCard label="CV" sub="Download résumé" href="/cv.pdf" accent="rose" download={true} /></div>
+      </div>
+    </section>
+
+    <!-- ── LINK LIST: the bottom SECONDARY element (§3.6) ── -->
+    <section class="links" aria-label="Related links" style="--i:7">
+      <p class="links__plate">[ ELSEWHERE ]</p>
+      <LinkList links={links} />
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .home { padding-block: var(--sp-8) var(--sp-9); }
+
+  /* ── HERO (§10.1): split-color band — blue-violet 2/3 text + acid 1/3 portrait.
+     Full-bleed, hard color stop, thick black seam. The page's sole acid climax. ── */
+  .hero {
+    --hero-split: 66.66%;
+    /* gutter = distance from viewport edge to the normal page content edge */
+    --gutter: max(var(--sp-5), calc(50vw - var(--maxw-page) / 2 + var(--sp-5)));
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--hero-split) 1fr;
+    gap: 0;
+    align-items: stretch;
+    margin-bottom: var(--sp-9);
+    /* full-bleed: break out of the centered .wrap-page container */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    background: linear-gradient(90deg,
+      var(--c-anchor) 0 var(--hero-split),
+      var(--c-acid) var(--hero-split) 100%);
+    border-block: var(--bd-thick);
+  }
+
+  /* left column · text on the blue-violet ground → paper */
+  .hero__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--sp-8) var(--sp-7) var(--sp-8) var(--gutter);
+  }
+  .hero__plate {
+    font: 500 var(--fs-meta)/1 var(--font-mono);
+    letter-spacing: var(--tracking-meta);
+    text-transform: uppercase;
+    color: var(--c-paper);
+    opacity: 0.75;
+    margin-bottom: var(--sp-4);
+  }
+  .hero__name {
+    font: 900 var(--fs-hero)/var(--lh-tight) var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--c-paper);
+    text-transform: uppercase;
+  }
+  .hero__tagline {
+    font: 600 var(--fs-h3)/1.2 var(--font-body);
+    color: var(--c-paper);
+    margin-top: var(--sp-3);
+  }
+  .hero__about {
+    margin-top: var(--sp-7);
+    max-width: var(--maxw-col);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: var(--c-paper);
+  }
+  .hero__about p + p { margin-top: var(--sp-3); }   /* space between paragraphs (e.g. CJK line) */
+
+  /* right column · acid ground carrying the offline-processed portrait PNG
+     (duotone/dots/offset baked in by scripts/process_portraits.py). */
+  .hero__media {
+    position: relative;
+    justify-self: stretch;
+    display: flex;
+    align-items: flex-end;       /* bottom anchor */
+    justify-content: flex-start; /* left anchor → bottom-left corner is fixed */
+    padding: var(--sp-6) var(--gutter) 0 0;
+    border-left: var(--bd-thick);   /* the seam */
+    overflow: hidden;
+  }
+  .hero__portrait {
+    /* enlarge the figure VISUALLY (transform doesn't grow the layout box, so the
+       band height is unchanged); bottom-left is the fixed anchor, top/right
+       overflow is clipped by the media's overflow:hidden */
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: bottom left;
+    align-self: flex-end;
+    transform: scale(1.25);
+    transform-origin: bottom left;
+  }
+
+  /* ── ENTRY CARDS ── */
+  .entries { margin-bottom: var(--sp-8); }
+  .entries__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-5);
+  }
+
+  /* ── LINKS ── */
+  .links__plate {
+    font: 500 var(--fs-meta)/1 var(--font-mono);
+    letter-spacing: var(--tracking-meta);
+    text-transform: uppercase;
+    color: var(--c-ink-muted);
+    margin-bottom: var(--sp-4);
+  }
+
+  /* ── responsive (≤880): stack hero vertically — blue block over acid block ── */
+  @media (max-width: 880px) {
+    .hero {
+      grid-template-columns: 1fr;
+      background: linear-gradient(180deg,
+        var(--c-anchor) 0 var(--hero-split),
+        var(--c-acid) var(--hero-split) 100%);
+    }
+    .hero__text { padding: var(--sp-7) var(--gutter); }
+    .hero__media {
+      border-left: 0;
+      border-top: var(--bd-thick);   /* seam moves horizontal */
+      padding: var(--sp-6) var(--gutter) 0;
+      justify-content: center;
+    }
+    .hero__portrait {
+      max-height: 56vh;
+      object-position: bottom center;
+      transform: none;
+    }
+    .entries__grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── §5: one-time staggered entrance, --i-derived delay, steps() ── */
+  .hero__plate,
+  .hero__name,
+  .hero__tagline,
+  .hero__about,
+  .hero__media,
+  .entries__grid > *,
+  .links {
+    animation: enter 0.5s steps(6) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+  @keyframes enter {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__plate, .hero__name, .hero__tagline, .hero__about,
+    .hero__media, .entries__grid > *, .links { animation: none; }
+  }
+</style>

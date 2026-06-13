@@ -1,0 +1,8 @@
+# Offline portrait pipeline deps (scripts/process_portraits.py).
+# Models (u2net / isnet-general-use) are fetched to ~/.u2net on first run;
+# if github.com is blocked, pull the .onnx files from a HuggingFace mirror
+# (e.g. https://huggingface.co/tomjackson2023/rembg) into ~/.u2net manually.
+Pillow>=10
+numpy>=1.24
+rembg>=2.0
+onnxruntime>=1.16

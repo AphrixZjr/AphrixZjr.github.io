@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="640" viewBox="0 0 520 640" role="img" aria-label="Personal portrait placeholder">
+  <!-- Homepage portrait placeholder. Portrait ratio, brutalist frame. -->
+  <rect width="520" height="640" fill="#eae2d0"/>
+  <line x1="0" y1="0" x2="520" y2="640" stroke="#0e0e0e" stroke-width="1.5" opacity="0.3"/>
+  <line x1="520" y1="0" x2="0" y2="640" stroke="#0e0e0e" stroke-width="1.5" opacity="0.3"/>
+  <!-- anchor block as a "head" mass -->
+  <rect x="170" y="150" width="180" height="180" fill="#3b2bf0" stroke="#0e0e0e" stroke-width="2.5"/>
+  <rect x="140" y="360" width="240" height="150" fill="#ccff00" stroke="#0e0e0e" stroke-width="2.5"/>
+  <text x="40" y="600" font-family="'Martian Mono', ui-monospace, monospace" font-size="16" font-weight="600" letter-spacing="3" fill="#0e0e0e">PORTRAIT</text>
+  <rect x="1.25" y="1.25" width="517.5" height="637.5" fill="none" stroke="#0e0e0e" stroke-width="2.5"/>
+</svg>

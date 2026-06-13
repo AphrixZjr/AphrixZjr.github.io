@@ -1,0 +1,8 @@
+title: "Portal Parabox"
+summary: "An experimental 3D rendering engine in OpenGL 3.3 to explore non-Euclidean geometry and recursive spatial teleportation."
+href: "https://github.com/No-findX/cg_project"
+image: "/images/projects/portal-parabox.jpg"
+tags: ["computer graphics", "game development"]
+accent: "acid"
+year: 2025
+order: 2

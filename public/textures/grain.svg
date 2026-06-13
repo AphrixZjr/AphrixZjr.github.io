@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+  <!-- §1.4: the ONLY global texture — a very faint paper grain (~0.04).
+       Tile-able; opacity kept low so it reads as paper, not "dirt". -->
+  <filter id="grain">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+  </filter>
+  <rect width="180" height="180" filter="url(#grain)" opacity="0.04"/>
+</svg>

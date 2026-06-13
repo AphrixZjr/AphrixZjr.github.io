@@ -1,0 +1,70 @@
+---
+// Nav.astro (§3.4) — persistent top bar, square ink border.
+// Fixed three entries: Project / More / CV. Site name returns Home.
+// CV is a DOWNLOAD, not a route. Stable design — exempt from §4.2 growth rules.
+import Markers from "./Markers.astro";
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const links = [
+  { label: "Project", href: "/projects" },
+  { label: "More", href: "/more" },
+];
+---
+<nav class="nav">
+  <div class="nav__inner wrap-page">
+    <a class="nav__home" href="/">AphrixZjr</a>
+    <ul class="nav__links">
+      {links.map((l) => (
+        <li>
+          <a href={l.href} class:list={["nav__link", { "is-current": path === l.href }]}>
+            {l.label}
+          </a>
+        </li>
+      ))}
+      <li>
+        <a class="nav__link nav__cv" href="/cv.pdf" download>
+          CV <Markers type="arrow-down" size={15} />
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    border-bottom: var(--bd-thick);
+    background: var(--c-paper);
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-5);
+    padding-block: var(--sp-3);
+  }
+  .nav__home {
+    font: 800 1.25rem/1 var(--font-display);
+    color: var(--c-ink);
+    letter-spacing: -0.01em;
+  }
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+  .nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-1);
+    font: 500 var(--fs-meta)/1 var(--font-mono);
+    letter-spacing: var(--tracking-meta);
+    text-transform: uppercase;
+    color: var(--c-ink);
+    padding: var(--sp-2) var(--sp-3);
+    border: var(--bd-thin);
+    border-radius: var(--radius);
+    transition: background-color 0.12s steps(2);
+  }
+  .nav__link:hover { background: var(--c-acid); }
+  .nav__link.is-current { background: var(--c-acid); }   /* current page: acid ground */
+  .nav__cv { color: var(--c-anchor); }
+</style>

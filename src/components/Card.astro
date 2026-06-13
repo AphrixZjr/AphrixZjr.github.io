@@ -1,0 +1,138 @@
+---
+// Card.astro (§3.1) — ONE master for both `projects` and `more`.
+// Differences come only from preset fields: accent, tags, featured, year.
+// Cards link externally: target="_blank" + rel + SR "(opens in new tab)" + mark-arrow ↗.
+import Tag from "./Tag.astro";
+import Markers from "./Markers.astro";
+
+interface Props {
+  entry: any;
+  index: number;
+  kind: string;
+}
+const { entry, index, kind } = Astro.props;
+const { title, summary, href, image, tags, accent = "anchor", featured, year } = entry.data;
+---
+<a
+  class:list={["card", `accent-${accent}`, { featured }]}
+  style={`--i:${index}`}
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <span class="card__bar" aria-hidden="true"></span>
+
+  <div class="card__media">
+    <img class="card__img" src={image} alt={title} width="480" height="270" loading="lazy" />
+  </div>
+
+  <div class="card__body">
+    <p class="card__meta">
+      <span>{kind.toUpperCase()}{year ? ` · ${year}` : ""}</span>
+      {featured && <span class="card__star"><Markers type="star" size={14} /></span>}
+      <span class="card__arrow"><Markers type="arrow" size={18} /></span>
+    </p>
+    <h3 class="card__title">{title}</h3>
+    <p class="card__summary">{summary}</p>
+    {tags.length > 0 && <ul class="card__tags">{tags.map((t: string) => <Tag label={t} />)}</ul>}
+  </div>
+
+  <span class="sr-only">(opens in new tab)</span>
+</a>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: var(--sp-5);
+    padding: var(--sp-5);
+    padding-left: var(--sp-6);
+    background: var(--c-paper);
+    border: var(--bd);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-hard);
+    color: var(--c-ink);
+    /* §5 hover: hard mechanical press, steps() not easing */
+    transition: transform 0.12s steps(2), box-shadow 0.12s steps(2);
+  }
+  .card:hover,
+  .card:focus-visible {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 var(--c-ink);
+  }
+  .card.featured:hover,
+  .card.featured:focus-visible {
+    box-shadow: 3px 3px 0 var(--c-anchor);
+  }
+
+  /* accent strip on the image-side edge; breaks.css flips it on even items */
+  .card__bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 100%;
+    background: var(--accent);
+    border-right: var(--bd-thin);
+  }
+
+  /* the 16:9 lives on the media BOX (align-self:start so the card's
+     stretch doesn't distort it); the img fills it with object-fit:cover */
+  .card__media {
+    flex: 0 0 42%;
+    align-self: start;
+    aspect-ratio: 16 / 9;
+    border: var(--bd);
+    border-radius: var(--radius);
+    background: var(--c-paper-2);
+    overflow: hidden;
+  }
+  .card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card__body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+
+  .card__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    font: 500 var(--fs-meta)/1 var(--font-mono);
+    letter-spacing: var(--tracking-meta);
+    text-transform: uppercase;
+    color: var(--c-ink-muted);
+  }
+  .card__star { color: var(--c-orange); }
+  .card__arrow { margin-left: auto; color: var(--c-anchor); }
+
+  .card__title {
+    font: 700 var(--fs-h3) / var(--lh-head) var(--font-display);
+    color: var(--c-ink);
+  }
+  .card__summary {
+    font-size: var(--fs-small);
+    color: var(--c-ink-muted);
+    max-width: 52ch;
+  }
+  .card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-top: auto;
+  }
+
+  @media (max-width: 640px) {
+    /* keep the reading path clean: stack image over text on small screens */
+    .card { flex-direction: column !important; }
+    .card__media { flex-basis: auto; }
+  }
+</style>

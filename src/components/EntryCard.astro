@@ -1,0 +1,73 @@
+---
+// EntryCard.astro (§3.5) — homepage bottom MAIN visual: 3 large cards
+// Project / More / CV. Bespoke layout (distinct from §3.1 content card),
+// fixed count of 3, hand-composed. Project/More → internal routes (→);
+// CV → download /cv.pdf (↓), same file as the Nav CV button.
+import Markers from "./Markers.astro";
+
+interface Props {
+  label: string;
+  sub: string;
+  href: string;
+  accent?: string;
+  download?: boolean;
+}
+const { label, sub, href, accent = "anchor", download = false } = Astro.props;
+const arrow = download ? "arrow-down" : "arrow-right";
+const rel = href.startsWith("http") ? "noopener noreferrer" : undefined;
+---
+<a
+  class:list={["entry", `accent-${accent}`]}
+  href={href}
+  download={download || undefined}
+  rel={rel}
+>
+  <span class="entry__bar mark-bar" aria-hidden="true"></span>
+  <span class="entry__row">
+    <span class="entry__label">{label}</span>
+    <span class="entry__arrow"><Markers type={arrow} size={28} /></span>
+  </span>
+  <span class="entry__sub">{sub}</span>
+</a>
+
+<style>
+  .entry {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    min-height: 220px;
+    padding: var(--sp-5);
+    background: var(--accent);
+    color: var(--accent-on);
+    border: var(--bd-thick);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-hard);
+    transition: transform 0.12s steps(2), box-shadow 0.12s steps(2);
+  }
+  .entry:hover,
+  .entry:focus-visible {
+    transform: translate(4px, 4px);
+    box-shadow: 1px 1px 0 var(--c-ink);
+  }
+  /* the mark-bar's acid bar reads against any accent ground */
+  .entry__bar::before { width: var(--sp-6); }
+
+  .entry__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    margin-top: auto;
+  }
+  .entry__label {
+    font: 800 var(--fs-h1)/0.95 var(--font-display);
+    text-transform: uppercase;
+  }
+  .entry__arrow { display: inline-flex; }
+  .entry__sub {
+    font: 500 var(--fs-meta)/1.3 var(--font-mono);
+    letter-spacing: var(--tracking-meta);
+    text-transform: uppercase;
+  }
+</style>

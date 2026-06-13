@@ -1,0 +1,77 @@
+/* ============================================================
+   tokens.css — the SINGLE style source (FRONTEND_DESIGN §1)
+   Components consume var(--…) only. No magic numbers in components.
+   ============================================================ */
+
+:root {
+  /* ── 1.1 Color · operating palette ─────────────────────────
+     4 load-bearing colors (~95% of every screen) +
+     4 accent colors (quota-limited, ≤~5% area per screen). */
+
+  /* load-bearing */
+  --c-anchor: #3b2bf0;   /* electric blue-violet · links, structure, focus */
+  --c-acid:   #ccff00;   /* acid yellow-green · the single strongest trigger */
+  --c-ink:    #0e0e0e;   /* true black · borders, headings, rules, body */
+  --c-paper:  #f3ecdd;   /* warm paper-white · page ground */
+
+  /* accent · quota-limited markers / mood */
+  --c-rose:   #ff2e6e;
+  --c-pink:   #ffc4dd;
+  --c-mint:   #8fefc9;
+  --c-orange: #ff5a1e;
+
+  /* derived neutrals (print depth, not color noise) */
+  --c-paper-2:   #eae2d0;  /* secondary ground: zebra, quotes, image holders */
+  --c-ink-muted: #4a4a45;  /* secondary text: meta, bio (still near-black) */
+  --c-hairline:  #0e0e0e;  /* rules = true black */
+
+  /* accent → resolved color + on-color (for accent-* helpers) */
+  --accent: var(--c-anchor);
+  --accent-on: var(--c-paper);
+
+  /* ── 1.2 Type · three-tier system ──────────────────────────
+     display (posters/headings) / body (neutral, CJK fallback) / mono (meta) */
+  --font-display: "Unbounded", system-ui, sans-serif;
+  --font-body:    "Schibsted Grotesk", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono:    "Martian Mono", ui-monospace, monospace;
+
+  /* modular, poster-scale jumps */
+  --fs-hero:  clamp(2.75rem, 8vw, 6.5rem);   /* homepage name · display 900 */
+  --fs-h1:    clamp(2rem, 4vw, 3.25rem);      /* page title · display 800 */
+  --fs-h2:    clamp(1.5rem, 2.5vw, 2.25rem);  /* section · display 700 */
+  --fs-h3:    1.375rem;                        /* card title · display 700 */
+  --fs-body:  1.0625rem;                       /* body 17px · 400 */
+  --fs-small: 0.875rem;                        /* secondary body */
+  --fs-meta:  0.75rem;                         /* meta/tags/year · mono 500 */
+
+  --lh-tight: 1.02;   /* hero: block-mass tight */
+  --lh-head:  1.1;
+  --lh-body:  1.6;     /* stable reading path (VIS §11③) */
+
+  --tracking-meta: 0.08em;
+
+  /* ── 1.3 Spacing · borders · surface ───────────────────────
+     8px base grid */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px;
+
+  /* borders build hierarchy — never soft glow */
+  --bd-thin:  2px solid var(--c-ink);
+  --bd:       2.5px solid var(--c-ink);
+  --bd-thick: 4px solid var(--c-ink);
+
+  /* site-wide square corners (VIS §6) */
+  --radius: 0;
+
+  /* the ONLY allowed shadow: hard offset, no blur */
+  --shadow-hard:    5px 5px 0 var(--c-ink);
+  --shadow-hard-lg: 8px 8px 0 var(--c-ink);
+  --shadow-accent:  6px 6px 0 var(--c-anchor);  /* featured cards */
+
+  /* containers */
+  --maxw-page: 1280px;
+  --maxw-col:  920px;
+
+  /* a single static homepage decoration angle (the only rotate allowed) */
+  --deco-angle: -4deg;
+}

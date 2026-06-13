@@ -1,0 +1,9 @@
+# Placeholder academic project — replace fields, keep schema.
+title: "RikeShell"
+summary: "A bare-metal, monolithic Unix-like kernel for the RV32 architecture, entirely free of boilerplate code."
+href: "https://github.com/shrike-505/ComputerSystemIII"
+image: "/images/projects/rikeshell.jpg"
+tags: ["operating system"]
+featured: true
+year: 2025
+order: 3

@@ -1,0 +1,11 @@
+# Homepage text content (collection: home). Edit copy here — index.astro reads it.
+name: "Aphrix Zjr"
+tagline: "Developer · Creator · Cinephile"
+aboutme:
+  - "I am a junior undergraduate student at Zhejiang University (Turing Class), majoring in Artificial Intelligence, with an honours degree from Chu Kochen Honors College."
+  - "I navigate the intersection of technology and the arts, exploring human experiences through diverse media. I want to engineer systems that foster positive impact and enable accessible, inclusive interactions."
+links:
+  - { label: "Email", href: "mailto:fisherfg19@gmail.com", order: 1 }
+  - { label: "GitHub", href: "https://github.com/AphrixZjr", order: 2 }
+  - { label: "Douban", href: "https://www.douban.com/people/griffesh91", order: 3 }
+  - { label: "WeChat", href: "https://mp.weixin.qq.com/s/unX1ZyJIMV0Gfa1CuC9xMQ", order: 4 }
