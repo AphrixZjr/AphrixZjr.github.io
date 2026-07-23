@@ -7,7 +7,7 @@ import SectionHeader from "../components/SectionHeader.astro";
 import Card from "../components/Card.astro";
 
 const entries = (await getCollection("more")).sort(
-  (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)
+  (a, b) => (b.data.order ?? 0) - (a.data.order ?? 0)
 );
 ---
 <BaseLayout title="More — AphrixZjr">

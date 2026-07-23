@@ -286,7 +286,7 @@ const card = z.object({
   accent:   accent.default("anchor"),    // 封面色：仅枚举，禁自由 hex
   featured: z.boolean().default(false),  // 星标 + 彩色硬阴影
   year:     z.coerce.number().optional(),
-  order:    z.number().default(0),       // 手控排序（数量少，手排即可）
+  order:    z.number().default(0),       // 倒序排列；新增顶端项目使用下一个数字
 });
 
 // homepage 文案——index.astro 不再硬编码任何文字

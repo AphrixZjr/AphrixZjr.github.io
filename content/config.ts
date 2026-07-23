@@ -19,7 +19,7 @@ const card = z.object({
   accent:   accent.default("anchor"),    // cover color: enum only, no free hex
   featured: z.boolean().default(false),  // star + colored hard shadow
   year:     z.coerce.number().optional(),
-  order:    z.number().default(0),       // manual sort (few items, hand-order is fine)
+  order:    z.number().default(0),       // descending: give new top entries the next number
 });
 
 // Homepage text content — no hardcoded copy in index.astro.
